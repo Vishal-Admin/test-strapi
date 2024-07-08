@@ -362,6 +362,37 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiInventoryInventory extends Schema.CollectionType {
+  collectionName: 'inventories';
+  info: {
+    singularName: 'inventory';
+    pluralName: 'inventories';
+    displayName: 'Inventory';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Partname: Attribute.String;
+    Quantity: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::inventory.inventory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::inventory.inventory',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTicketTicket extends Schema.CollectionType {
   collectionName: 'tickets';
   info: {
@@ -830,6 +861,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::inventory.inventory': ApiInventoryInventory;
       'api::ticket.ticket': ApiTicketTicket;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
